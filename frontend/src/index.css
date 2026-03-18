@@ -1,0 +1,349 @@
+/* ─── Google Fonts ─────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ─── Reset & root ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --font: 'Inter', system-ui, sans-serif;
+
+  /* Palette */
+  --bg:          #0a0a12;
+  --card-bg:     rgba(15, 15, 28, 0.72);
+  --card-border: rgba(255,255,255,0.10);
+  --accent:      #6c63ff;
+  --accent-h:    #8b85ff;
+  --danger:      #ff4d6d;
+  --text:        #f0f0f8;
+  --text-muted:  #9090b0;
+  --input-bg:    rgba(255,255,255,0.06);
+  --input-bdr:   rgba(255,255,255,0.14);
+  --success:     #2ecc71;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Spline Background Wrapper ───────────────────────────────── */
+/*
+  .spline-bg  = fixed full-screen container for the 3D scene
+  .spline-dim = low opacity (auth pages)
+  .spline-full= full opacity (dashboard)
+*/
+.spline-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;   /* clicks pass through to the UI */
+  transition: opacity 0.8s ease;
+}
+
+.spline-bg canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Spline runtime renders inside a <spline-viewer> shadow root,
+   so we target the wrapper div directly */
+.spline-bg > div,
+.spline-bg > spline-viewer {
+  width: 100%;
+  height: 100%;
+}
+
+.spline-dim  { opacity: 0.22; }
+.spline-full { opacity: 1; }
+
+/* ─── Auth wrapper (login / register pages) ────────────────────── */
+.auth-wrapper {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 1;
+}
+
+/* ─── Auth Card ────────────────────────────────────────────────── */
+.auth-card {
+  position: relative;
+  z-index: 2;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  border-radius: 20px;
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 12px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(108,99,255,0.10);
+  animation: cardIn 0.45s cubic-bezier(.22,1,.36,1);
+}
+
+@keyframes cardIn {
+  from { opacity:0; transform: translateY(28px) scale(0.97); }
+  to   { opacity:1; transform: translateY(0)   scale(1); }
+}
+
+.auth-logo {
+  font-size: 2.4rem;
+  text-align: center;
+  margin-bottom: -4px;
+}
+
+.auth-title {
+  font-size: 1.65rem;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: -0.4px;
+  color: #fff;
+}
+
+.auth-subtitle {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: -8px;
+}
+
+/* ─── Input group ─────────────────────────────────────────────── */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-group label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.input-group input,
+input {
+  padding: 11px 14px;
+  background: var(--input-bg);
+  border: 1px solid var(--input-bdr);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-family: var(--font);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+
+.input-group input::placeholder,
+input::placeholder {
+  color: rgba(255,255,255,0.28);
+}
+
+.input-group input:focus,
+input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(108,99,255,0.22);
+}
+
+/* ─── Buttons ─────────────────────────────────────────────────── */
+.primary-btn,
+button {
+  padding: 12px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: var(--font);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(108,99,255,0.35);
+  width: 100%;
+}
+
+.primary-btn:hover,
+button:hover {
+  background: var(--accent-h);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 25px rgba(108,99,255,0.45);
+}
+
+.primary-btn:disabled,
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ─── Google Button ───────────────────────────────────────────── */
+.google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 11px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px;
+  text-decoration: none;
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 500;
+  font-family: var(--font);
+  transition: background 0.2s, transform 0.15s;
+  width: 100%;
+}
+
+.google-btn:hover {
+  background: rgba(255,255,255,0.13);
+  transform: translateY(-1px);
+  color: #fff;
+}
+
+/* ─── Divider ─────────────────────────────────────────────────── */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,0.10);
+}
+
+/* ─── Error banner ────────────────────────────────────────────── */
+.auth-error {
+  background: rgba(255,77,109,0.15);
+  border: 1px solid rgba(255,77,109,0.35);
+  color: #ff8fa3;
+  font-size: 0.84rem;
+  border-radius: 8px;
+  padding: 10px 14px;
+  text-align: center;
+  animation: shake 0.3s;
+}
+
+@keyframes shake {
+  0%,100%{ transform:translateX(0); }
+  25%    { transform:translateX(-5px); }
+  75%    { transform:translateX(5px); }
+}
+
+/* ─── Footer link ─────────────────────────────────────────────── */
+.auth-footer {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.auth-footer a {
+  color: var(--accent-h);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.15s;
+}
+
+.auth-footer a:hover { color: #fff; }
+
+/* ─── Dashboard ───────────────────────────────────────────────── */
+.dashboard-wrapper {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  overflow: hidden;
+}
+
+.dashboard-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard-card {
+  background: rgba(10, 10, 20, 0.60);
+  border: 1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  border-radius: 24px;
+  padding: 52px 48px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  box-shadow: 0 20px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(108,99,255,0.12);
+  max-width: 480px;
+  width: 100%;
+  animation: cardIn 0.5s cubic-bezier(.22,1,.36,1);
+}
+
+.welcome-badge {
+  background: rgba(108,99,255,0.18);
+  border: 1px solid rgba(108,99,255,0.35);
+  color: var(--accent-h);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 100px;
+  letter-spacing: 0.4px;
+}
+
+.dashboard-heading {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.8px;
+  line-height: 1.2;
+}
+
+.dashboard-sub {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-top: -6px;
+}
+
+.logout-btn {
+  margin-top: 8px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  font-weight: 500;
+  padding: 10px 28px;
+  border-radius: 10px;
+  cursor: pointer;
+  width: auto;
+  box-shadow: none;
+  transition: border-color 0.2s, color 0.2s, transform 0.15s;
+}
+
+.logout-btn:hover {
+  border-color: var(--danger);
+  color: #ff8fa3;
+  background: rgba(255,77,109,0.08);
+  transform: translateY(-1px);
+  box-shadow: none;
+}
