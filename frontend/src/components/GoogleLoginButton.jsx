@@ -1,7 +1,9 @@
+import { API_URL } from "../utils/apiConfig"
+
 function GoogleLoginButton() {
   return (
     <a
-      href="http://localhost:5000/auth/google"
+      href={`${API_URL}/auth/google`}
       className="google-btn"
     >
       <svg

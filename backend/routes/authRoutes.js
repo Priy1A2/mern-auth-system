@@ -95,7 +95,7 @@ passport.authenticate("google",{scope:["profile","email"]})
 // GOOGLE CALLBACK — issues JWT and redirects to frontend with token + name
 router.get(
 "/google/callback",
-passport.authenticate("google",{session:false, failureRedirect:"http://localhost:5173/?error=google_failed"}),
+passport.authenticate("google",{session:false, failureRedirect:`${process.env.FRONTEND_URL || "http://localhost:5173"}/?error=google_failed`}),
 (req,res)=>{
 const token = jwt.sign(
 { id:req.user._id },
@@ -103,7 +103,7 @@ process.env.JWT_SECRET,
 { expiresIn:"1d" }
 )
 const name = encodeURIComponent(req.user.name)
-res.redirect(`http://localhost:5173/dashboard?token=${token}&name=${name}`)
+res.redirect(`${process.env.FRONTEND_URL || "http://localhost:5173"}/dashboard?token=${token}&name=${name}`)
 }
 )
 

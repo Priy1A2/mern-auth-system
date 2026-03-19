@@ -3,6 +3,7 @@ import axios from "axios"
 import { Link } from "react-router-dom"
 import GoogleLoginButton from "../components/GoogleLoginButton"
 import Spline from "@splinetool/react-spline"
+import { API_URL } from "../utils/apiConfig"
 
 function Login(){
 
@@ -20,7 +21,7 @@ setLoading(true)
 try{
 
 const res = await axios.post(
-"http://localhost:5000/auth/login",
+`${API_URL}/auth/login`,
 {email,password}
 )
 
