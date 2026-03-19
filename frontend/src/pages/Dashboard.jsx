@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import Spline from "@splinetool/react-spline"
+import { API_URL } from "../utils/apiConfig"
 
 function Dashboard(){
 
