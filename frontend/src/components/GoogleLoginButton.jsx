@@ -1,9 +1,11 @@
 import { API_URL } from "../utils/apiConfig"
 
-function GoogleLoginButton() {
+function GoogleLoginButton({ url }) {
+  const href = url || `${API_URL}/auth/google`
+
   return (
     <a
-      href={`${API_URL}/auth/google`}
+      href={href}
       className="google-btn"
     >
       <svg
